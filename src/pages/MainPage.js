@@ -37,6 +37,35 @@ const MainPage = () => {
         loadData();
     }, []);
 
+    const onRemove = (index) => {
+        const newList = [...data];
+        if (index > -1 && index < data.length) {
+
+            const completedIndexOf = completedIndexes.indexOf(index);
+            if (completedIndexOf !== -1) {
+                const newCompletedIndexes = [...completedIndexes];
+                newCompletedIndexes.splice(completedIndexOf, 1);
+                setCompletedIndexes(newCompletedIndexes);
+            }
+
+            newList.splice(index, 1);
+            setData(newList);
+        }
+    };
+
+    const onComplete = (index) => {
+        const indexOf = completedIndexes.indexOf(index);
+        const completed = indexOf !== -1;
+        if (completed) {
+            const newIndexes = [...completedIndexes];
+            newIndexes.splice(indexOf, 1);
+            setCompletedIndexes(newIndexes);
+
+        } else {
+            setCompletedIndexes([...completedIndexes, index]);
+        }
+    };
+
     return (
         <Container>
             {loading ? <CircularProgress/>
@@ -56,34 +85,8 @@ const MainPage = () => {
                     <TodoList
                         data={data}
                         completedIndexes={completedIndexes}
-                        onRemove={(index) => {
-
-                            const newList = [...data];
-                            if (index > -1 && index < data.length) {
-
-                                const completedIndexOf = completedIndexes.indexOf(index);
-                                if (completedIndexOf !== -1) {
-                                    const newCompletedIndexes = [...completedIndexes];
-                                    newCompletedIndexes.splice(completedIndexOf, 1);
-                                    setCompletedIndexes(newCompletedIndexes);
-                                }
-
-                                newList.splice(index, 1);
-                                setData(newList);
-                            }
-                        }}
-                        onComplete={i => {
-                            const indexOf = completedIndexes.indexOf(i);
-                            const completed = indexOf !== -1;
-                            if (completed) {
-                                const newIndexes = [...completedIndexes];
-                                newIndexes.splice(indexOf, 1);
-                                setCompletedIndexes(newIndexes);
-
-                            } else {
-                                setCompletedIndexes([...completedIndexes, i]);
-                            }
-                        }}
+                        onRemove={onRemove}
+                        onComplete={onComplete}
                     />
                 </div>
             }
