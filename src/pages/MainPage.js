@@ -27,7 +27,8 @@ const MainPage = () => {
 
     const loadData = async () => {
         setLoading(true);
-        const data = await ApiService.getData();
+        const data = await ApiService.getData()
+            .then(x => new Promise(resolve => setTimeout(() => resolve(x), 1000)));
         setData(data);
         setLoading(false);
     };
@@ -56,8 +57,17 @@ const MainPage = () => {
                         data={data}
                         completedIndexes={completedIndexes}
                         onRemove={(index) => {
+
                             const newList = [...data];
                             if (index > -1 && index < data.length) {
+
+                                const completedIndexOf = completedIndexes.indexOf(index);
+                                if (completedIndexOf !== -1) {
+                                    const newCompletedIndexes = [...completedIndexes];
+                                    newCompletedIndexes.splice(completedIndexOf, 1);
+                                    setCompletedIndexes(newCompletedIndexes);
+                                }
+
                                 newList.splice(index, 1);
                                 setData(newList);
                             }

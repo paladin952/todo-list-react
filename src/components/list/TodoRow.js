@@ -40,7 +40,10 @@ const TodoRow = ({value, onRemove, isCompleted, onComplete}) => {
         <MiddleSpace/>
 
         <TransparentButton>
-            <RemoveButton onClick={onRemove}>X</RemoveButton>
+            <RemoveButton onClick={e => {
+                e.stopPropagation();
+                onRemove();
+            }}>X</RemoveButton>
         </TransparentButton>
 
         <HorizontalMargin/>
