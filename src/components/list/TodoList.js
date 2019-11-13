@@ -4,10 +4,6 @@ import {VerticalContainer, VerticalMargin} from "../general/Generic";
 import styled from "styled-components";
 import List from "@material-ui/core/List";
 
-const Container = styled.div`
-  width: 100%;
-`;
-
 const Margin = styled(VerticalMargin)`height: 5px`;
 
 const TodoList = ({data, completedIndexes, onRemove, onComplete}) => {
